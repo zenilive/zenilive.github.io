@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -108,8 +108,40 @@
       color: #9caf9a;
     }
 
-    .offline {
-      color: #a8a8a8;
+    .access {
+      margin-top: 34px;
+      padding: 28px;
+      background: #181b1f;
+      border: 1px solid #30343a;
+      border-radius: 12px;
+    }
+
+    .access h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .access p {
+      margin: 0;
+      color: #8e959d;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 12px 18px;
+      border: 1px solid #59616a;
+      border-radius: 8px;
+      color: #e8e8e8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #20242a;
     }
 
     footer {
@@ -159,81 +191,45 @@
     <section class="intro">
       <h2>System Monitor</h2>
       <p>
-        Real-time monitoring interface for the Zeni trading automation system.
+        Secure monitoring interface for the Zeni trading automation system.
       </p>
     </section>
 
     <section class="grid">
-
       <div class="card">
-        <div class="label">WEB STATUS</div>
+        <div class="label">PUBLIC SITE</div>
         <div class="value ok">ONLINE</div>
       </div>
 
       <div class="card">
-        <div class="label">ZENI M1</div>
-        <div id="zeni-status" class="value offline">NOT CONNECTED</div>
+        <div class="label">ZENI LIVE</div>
+        <div class="value">TAILNET ONLY</div>
       </div>
 
       <div class="card">
-        <div class="label">DATA LINK</div>
-        <div id="data-link" class="value offline">NOT CONNECTED</div>
+        <div class="label">ACCESS</div>
+        <div class="value">SECURE</div>
       </div>
+    </section>
 
+    <section class="access">
+      <h3>Open ZENI LIVE</h3>
+      <p>
+        The live monitoring dashboard is available only to authorized
+        devices connected to the Zeni Tailscale network.
+      </p>
+
+      <a
+        class="button"
+        href="https://zeni-m1.tail1ce582.ts.net"
+        rel="noopener noreferrer"
+      >Open ZENI LIVE</a>
     </section>
 
     <footer>
-      ZENI LIVE 쨌 GitHub Pages deployment test
+      ZENI LIVE · Public access page
     </footer>
 
   </main>
-
-    <script>
-      const ZENI_API_BASE = "https://zeni-m1.tail1ce582.ts.net";
-
-      async function refreshZeniStatus() {
-        const zeni = document.getElementById("zeni-status");
-        const dataLink = document.getElementById("data-link");
-
-        try {
-          const response = await fetch(
-            `${ZENI_API_BASE}/api/status`,
-            { cache: "no-store" }
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-
-          const status = await response.json();
-
-          if (status.status === "online") {
-            zeni.textContent = "ONLINE";
-            zeni.classList.remove("offline");
-          } else {
-            zeni.textContent = "NOT CONNECTED";
-            zeni.classList.add("offline");
-          }
-
-          if (status.trading_data_connected === true) {
-            dataLink.textContent = "CONNECTED";
-            dataLink.classList.remove("offline");
-          } else {
-            dataLink.textContent = "NOT CONNECTED";
-            dataLink.classList.add("offline");
-          }
-        } catch (error) {
-          zeni.textContent = "NOT CONNECTED";
-          zeni.classList.add("offline");
-          dataLink.textContent = "NOT CONNECTED";
-          dataLink.classList.add("offline");
-        }
-      }
-
-      refreshZeniStatus();
-      setInterval(refreshZeniStatus, 10000);
-    </script>
-  </body>
+</body>
 </html>
-
-<!-- ===EXECUTION_FINISHED=== -->
